@@ -1,32 +1,41 @@
+
 def main():
     taskList = []
     
     while True:
+        print("-------------------")
         print("1. Add a task")
         print("2. See tasks")
         print("3. Complete task")
         print("4. Delete task")
         print("5 Exit")
+        print("-------------------")
 
-        option = int(input("Choose one option: "))
+        try:
+            option = int(input("Choose one option: "))
+        
+        except ValueError:
+            print("Enter a number please")
+            continue
+            
+        print("-------------------")
     
     
-        afterInput(option,taskList)
+        afterInput(option,taskList) 
 
 
-def afterInput(option:int,taskListE:list)->any:
-    taskList = taskListE
-    task = None
+def afterInput(option:int,taskList:list)->any:
+    description = None
 
     if option == 1: #Add a task
-        task = str(input("Discribe task :"))
-        taskList.append(Task(task))
+        description = str(input("Describe task :"))
+        taskList.append(Task(description))
         printList(taskList)
     if option == 2: #See tasks
         printList(taskList)
     if option == 3: #Complete task
         taskId = int(input("Choose the task number :"))
-        findTask(taskId,taskList)
+        findTaskAndComplete(taskId,taskList)
     if option == 4: #Delete task
         delTs = int(input("Choose the task to delete : "))
         deleteTask(delTs,taskList)
@@ -41,7 +50,7 @@ class Task():
         self.task_id = Task.contador_id
         Task.contador_id += 1 
     def __repr__(self):
-        if self.complete == True:
+        if self.complete:
             return f"{self.task_id}. {self.description} -> Completa"
         else:
             return f"{self.task_id}. {self.description} -> Incompleta"
@@ -50,24 +59,44 @@ class Task():
             self.complete = True
 
 def printList(tasklist:list)-> any:
-    taskList = tasklist
-    for task in taskList:
-        print(task)
 
-def findTask(taskId:int,tasklist:list)-> any:
-    taskList = tasklist
-    for task in taskList:
+    print("")
+    print("##############")
+    print("Tasker:")
+    for task in tasklist:
+        print(task)
+    print("##############")
+    print("")
+
+def findTaskAndComplete(taskId: int, tasklist: list):
+
+    for task in tasklist:
         if task.task_id == taskId:
             task.completeTask()
-    return printList(taskList)
+            print("")
+            print(f"Task number {task.task_id} was complete! ")
+            print("")
+            return
+    print("")
+    print("Task not found!")
+    print("")
 
 
 def deleteTask(delTs:int,tasklist:list)-> any:
-    taskList = tasklist
     for task in tasklist:
-        if task.task_id == delTs: 
-            tasklist.remove(task)
-    return printList(taskList)
+        if task.task_id == delTs:
+            if task.complete: 
+                tasklist.remove(task)
+            else:
+                print("!!!!!!!!!!!!!!!!!!!!")
+                print("The task is not complete")
+                print("!!!!!!!!!!!!!!!!!!!!")
+            break
+        else:
+            print("!!!!!!!!!!!!!!!!!!!!")
+            print("That task number doesnt exist")
+            print("!!!!!!!!!!!!!!!!!!!!")
+        break
 
 main()
 
