@@ -1,6 +1,7 @@
-
+from task_class import *
+from storage import *
 def main():
-    taskList = []
+    taskList = load_tasks()
     
     while True:
         print("-------------------")
@@ -30,33 +31,21 @@ def afterInput(option:int,taskList:list)->any:
     if option == 1: #Add a task
         description = str(input("Describe task :"))
         taskList.append(Task(description))
+        save_tasks(taskList)
         printList(taskList)
+        
     if option == 2: #See tasks
         printList(taskList)
     if option == 3: #Complete task
         taskId = int(input("Choose the task number :"))
         findTaskAndComplete(taskId,taskList)
+        save_tasks(taskList)
     if option == 4: #Delete task
         delTs = int(input("Choose the task to delete : "))
         deleteTask(delTs,taskList)
+        save_tasks(taskList)
     if option == 5:
         exit()
-
-class Task():
-    contador_id = 1
-    def __init__(self, description:str):
-        self.description = description
-        self.complete = False
-        self.task_id = Task.contador_id
-        Task.contador_id += 1 
-    def __repr__(self):
-        if self.complete:
-            return f"{self.task_id}. {self.description} -> Completa"
-        else:
-            return f"{self.task_id}. {self.description} -> Incompleta"
-        
-    def completeTask(self):
-            self.complete = True
 
 def printList(tasklist:list)-> any:
 
@@ -66,20 +55,20 @@ def printList(tasklist:list)-> any:
     for task in tasklist:
         print(task)
     print("##############")
-    print("")
+    print(" ")
 
 def findTaskAndComplete(taskId: int, tasklist: list):
 
     for task in tasklist:
         if task.task_id == taskId:
             task.completeTask()
-            print("")
+            print(" ")
             print(f"Task number {task.task_id} was complete! ")
             print("")
             return
-    print("")
+    print(" ")
     print("Task not found!")
-    print("")
+    print(" ")
 
 
 def deleteTask(delTs:int,tasklist:list)-> any:
@@ -89,12 +78,16 @@ def deleteTask(delTs:int,tasklist:list)-> any:
                 tasklist.remove(task)
             else:
                 print("!!!!!!!!!!!!!!!!!!!!")
+                print(" ")
                 print("The task is not complete")
+                print(" ")
                 print("!!!!!!!!!!!!!!!!!!!!")
             break
         else:
             print("!!!!!!!!!!!!!!!!!!!!")
+            print(" ")
             print("That task number doesnt exist")
+            print(" ")
             print("!!!!!!!!!!!!!!!!!!!!")
         break
 
