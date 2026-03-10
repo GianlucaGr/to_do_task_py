@@ -34,17 +34,17 @@ def afterInput(option:int,taskList:list)->any:
         save_tasks(taskList)
         printList(taskList)
         
-    if option == 2: #See tasks
+    elif option == 2: #See tasks
         printList(taskList)
-    if option == 3: #Complete task
+    elif option == 3: #Complete task
         taskId = int(input("Choose the task number :"))
         findTaskAndComplete(taskId,taskList)
         save_tasks(taskList)
-    if option == 4: #Delete task
+    elif option == 4: #Delete task
         delTs = int(input("Choose the task to delete : "))
         deleteTask(delTs,taskList)
         save_tasks(taskList)
-    if option == 5:
+    else:
         exit()
 
 def printList(tasklist:list)-> any:
