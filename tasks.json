@@ -7,6 +7,16 @@
     {
         "task_id": 3,
         "description": "Caminar",
+        "complete": true
+    },
+    {
+        "task_id": 4,
+        "description": "Leer",
+        "complete": false
+    },
+    {
+        "task_id": 6,
+        "description": "Merendar",
         "complete": false
     }
 ]

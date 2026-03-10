@@ -49,12 +49,10 @@ def afterInput(option:int,taskList:list)->any:
 
 def printList(tasklist:list)-> any:
 
-    print("")
-    print("##############")
+    print(" ")
     print("Tasker:")
     for task in tasklist:
         print(task)
-    print("##############")
     print(" ")
 
 def findTaskAndComplete(taskId: int, tasklist: list):
@@ -76,20 +74,21 @@ def deleteTask(delTs:int,tasklist:list)-> any:
         if task.task_id == delTs:
             if task.complete: 
                 tasklist.remove(task)
+                print("Task deleted")
             else:
                 print("!!!!!!!!!!!!!!!!!!!!")
                 print(" ")
                 print("The task is not complete")
                 print(" ")
                 print("!!!!!!!!!!!!!!!!!!!!")
-            break
-        else:
-            print("!!!!!!!!!!!!!!!!!!!!")
-            print(" ")
-            print("That task number doesnt exist")
-            print(" ")
-            print("!!!!!!!!!!!!!!!!!!!!")
-        break
+        
+            return
+        
+    print("!!!!!!!!!!!!!!!!!!!!")
+    print(" ")
+    print("That task number doesnt exist")
+    print(" ")
+    print("!!!!!!!!!!!!!!!!!!!!")
 
 main()
 
