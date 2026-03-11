@@ -1,7 +1,8 @@
 from task_class import *
 from storage import *
+
 def main():
-    taskList = load_tasks()
+    taskList = load_tasks() #this function loads json tasks
     
     while True:
         print("-------------------")
@@ -12,12 +13,15 @@ def main():
         print("5 Exit")
         print("-------------------")
 
-        try:
+        try: # if the input is not a number, send a advice and repeat
             option = int(input("Choose one option: "))
         
         except ValueError:
-            print("Enter a number please")
+            print("\nEnter a number please")
             continue
+        
+        if option not in[1,2,3,4,5]:
+            print("\nPlease enter a valid option from the menu!")
             
         print("-------------------")
     
@@ -36,15 +40,26 @@ def afterInput(option:int,taskList:list)->any:
         
     elif option == 2: #See tasks
         printList(taskList)
+
     elif option == 3: #Complete task
-        taskId = int(input("Choose the task number :"))
-        findTaskAndComplete(taskId,taskList)
-        save_tasks(taskList)
+        try: 
+            taskId = int(input("Choose the task number :"))
+            findTaskAndComplete(taskId,taskList)
+            save_tasks(taskList)
+        except ValueError:
+            print("\n Choose a number please")
+            return
+
     elif option == 4: #Delete task
-        delTs = int(input("Choose the task to delete : "))
-        deleteTask(delTs,taskList)
-        save_tasks(taskList)
-    else:
+        try:
+            delTs = int(input("Choose the task to delete : "))
+            deleteTask(delTs,taskList)
+            save_tasks(taskList)
+        except ValueError:
+            print("\n Choose a number please")
+            return
+        
+    elif option == 5:
         exit()
 
 def printList(tasklist:list)-> any:
@@ -60,13 +75,9 @@ def findTaskAndComplete(taskId: int, tasklist: list):
     for task in tasklist:
         if task.task_id == taskId:
             task.completeTask()
-            print(" ")
-            print(f"Task number {task.task_id} was complete! ")
-            print("")
+            print(f"\nTask number {task.task_id} was complete! ")
             return
-    print(" ")
-    print("Task not found!")
-    print(" ")
+    print("\nTask not found!") # if taskId is not found in list, send an advice
 
 
 def deleteTask(delTs:int,tasklist:list)-> any:
@@ -74,20 +85,16 @@ def deleteTask(delTs:int,tasklist:list)-> any:
         if task.task_id == delTs:
             if task.complete: 
                 tasklist.remove(task)
-                print("Task deleted")
+                print("\nTask deleted")
             else:
                 print("!!!!!!!!!!!!!!!!!!!!")
-                print(" ")
-                print("The task is not complete")
-                print(" ")
+                print("\nThe task is not complete")
                 print("!!!!!!!!!!!!!!!!!!!!")
         
             return
         
     print("!!!!!!!!!!!!!!!!!!!!")
-    print(" ")
-    print("That task number doesnt exist")
-    print(" ")
+    print("\nThat task number doesnt exist")# if delTs is not found in list, send an advice
     print("!!!!!!!!!!!!!!!!!!!!")
 
 main()

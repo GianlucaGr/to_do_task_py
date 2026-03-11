@@ -24,7 +24,7 @@ class Task():
     def completeTask(self):
             self.complete = True
 
-    def to_dict(self)->dict:
+    def to_dict(self)->dict: #turn the task to dict
         task = {
              "task_id" : self.task_id,
              "description" : self.description,
@@ -32,7 +32,7 @@ class Task():
         }
         return task
 
-    @classmethod 
+    @classmethod # this classmethod convert to class the json
     def from_dict(cls,data):
 
         return cls(
